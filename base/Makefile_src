@@ -1,0 +1,38 @@
+#########################################
+#
+# make file
+#########################################
+
+include $(BOTTOM_LIB_TCP)/Make.include
+
+# exe, staticlib, dynamiclib
+TYPE:= dynamiclib
+
+#output name
+TARGETNAME:= base
+
+# include dir
+INCLUDES= 
+
+# depends lib src
+LIBDIRS= -lrt
+
+#src dir
+SRCDIR:= ./src/
+
+#version file
+include $(SRCDIR)/version
+ 
+TOTALSRCDIR:= ./src/ ./src/lockfree_queue/ ./src/ring_buffer/ ./src/tcp_client/ ./src/tcp_server/
+
+#CCXXFLAGS= -DDEBUG -g
+ 
+#OFLAGS= -L$(TARGET_PATH_R)
+GLOBAL_CCXXFLAGS += -std=c++11 
+CCXXFLAGS = -fPIC
+#CFLAGS =
+#EXOBJS =
+#EXCLUDESRCS =
+ 
+ 
+include $(BOTTOM_LIB_TCP)/Make.share
