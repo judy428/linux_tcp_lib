@@ -1,0 +1,34 @@
+#########################################
+#
+# nio makefile
+#########################################
+
+include $(BOTTOM_LIB_TCP)/Make.include
+
+# exe, staticlib, dynamiclib
+TYPE:= exe
+
+#output name
+TARGETNAME:= client
+
+# include  dir
+INCLUDES =
+
+# depends lib
+LIBDIRS = -lbase -lcommon -lrt
+
+#src dir
+SRCDIR:= ./tcpclient/
+ 
+#CCXXFLAGS= -DDEBUG -g
+TOTALSRCDIR:= ./tcpclient/
+#OFLAGS= -L$(TARGET_PATH_R)
+GLOBAL_CCXXFLAGS += -g -Wall -pthread -std=c++11 -Wl,-rpath=./
+CCXXFLAGS = -fPIC
+#CFLAGS =
+#EXOBJS =
+#EXCLUDESRCS =
+ 
+#USEMYSELFALL = yes;
+ 
+include $(BOTTOM_LIB_TCP)/Make.share

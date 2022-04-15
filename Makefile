@@ -13,6 +13,7 @@ endif
 SUBDIRS1:= \
 	./base	\
 	./common	\
+	./common/test	\
 	
 .PHONY: SUPPORTCMDS
 
