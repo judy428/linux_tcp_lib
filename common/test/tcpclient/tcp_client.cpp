@@ -164,6 +164,7 @@ int sendData(std::shared_ptr<easyTcpClient> etc)
 
 int stress_test()
 {
+    TRACE_SYSTEM("test","stress_test() begin");
     std::shared_ptr<easyTcpClient> cs[cCount];
     for(int i = 0;i<cCount;i++){
         cs[i] = std::make_shared<easyTcpClient>();
@@ -195,7 +196,7 @@ int stress_test()
     auto castTime2 = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime );
     auto s = total_recv.load() / castTime.count() * 2;
     auto s2 = total_recv.load() / castTime2.count() * 2;
-    TRACE_SYSTEM("test","cast time,seconds:%d,speed:%d,cast time,milliseconds:%d,speed2:%d",castTime,s ,castTime2,s2);
+    TRACE_SYSTEM("test","send msg:%d,recv msg:%d,cast time,seconds:%d,speed:%d,cast time,milliseconds:%d,speed2:%d",SendNum * cCount,total_recv.load(),castTime,s ,castTime2,s2);
     std::this_thread::sleep_for(std::chrono::seconds(10));
     for (int i = 0; i < cCount; i++)
 	{
@@ -205,7 +206,8 @@ int stress_test()
     {
         th[i]->join();
     }
-    TRACE_SYSTEM("test","total_recv:%d",total_recv.load());
+    // TRACE_SYSTEM("test","total_recv:%d",total_recv.load());
+    TRACE_SYSTEM("test","stress_test() end");
 }
 
 int main()

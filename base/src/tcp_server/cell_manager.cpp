@@ -30,18 +30,18 @@ cellManager::cellManager(tNotify* tN,int cpuN){
     m_cellTask = new srt_queue<cellTask*>();
     m_cellTask->init();
 
-    m_handleRead = new srt_queue<int>();
-    m_handleRead->init();
+    // m_handleRead = new srt_queue<int>();
+    // m_handleRead->init();
 
-    m_th = make_shared<std::thread>(bind(&cellManager::handleRead,this));
+    // m_th = make_shared<std::thread>(bind(&cellManager::handleRead,this));
 }
 
 cellManager::~cellManager(){
     stop();
-    if(m_th->joinable())
-    {
-        m_th->join();
-    }
+    // if(m_th->joinable())
+    // {
+    //     m_th->join();
+    // }
     for(auto &it : m_Cell){
         //delete it.second;
         delClientCell(it.second);
@@ -64,21 +64,22 @@ cellManager::~cellManager(){
 }
 
 
-void cellManager::handleRead()
-{
-    int clientid;
-    while(is_running()){
-        if(m_handleRead->pop(clientid)){
-             if (m_Cell.find(clientid) == m_Cell.end())
-            {
-                TRACE_ERROR(BASE_TAG,NAUT_AT_E_TCP_SERVER_CLIENT_CLOSED,"client has been closed,clientid:%d",clientid);
-                //delTask(clientid);
-                continue;
-            }
+// void cellManager::handleRead()
+// {
+//     int clientid;
+//     while(is_running()){
+//         if(m_handleRead->pop(clientid)){
+//              if (m_Cell.find(clientid) == m_Cell.end())
+//             {
+//                 TRACE_ERROR(BASE_TAG,NAUT_AT_E_TCP_SERVER_CLIENT_CLOSED,"client has been closed,clientid:%d",clientid);
+//                 //delTask(clientid);
+//                 continue;
+//             }
 
-        }
-    }
-}
+//         }
+//     }
+// }
+
 void cellManager::addTask(clientCell* cell){
     cellTask* ct = new cellTask();
     ct->event = 'A';
@@ -405,7 +406,7 @@ void cellManager::doSend(int clientid){
             
             if(retsize < 0){
                 if (errno == EINTR || errno == EAGAIN){
-                    TRACE_SYSTEM(BASE_TAG,"doSend failed,please try again,retsize:%d,cliendid:%d,errno:%d",retsize,clientid,errno);
+                    TRACE_SYSTEM(BASE_TAG,"doSend failed,will try again,retsize:%d,cliendid:%d,errno:%d",retsize,clientid,errno);
                     continue;
                 }else{
                     TRACE_ERROR(BASE_TAG,NAUT_AT_E_TCP_SERVER_CLIENT_CLOSED,"doSend error,retsize:%d,cliendid:%d,errno:%d",retsize,clientid,errno);
@@ -413,7 +414,7 @@ void cellManager::doSend(int clientid){
                 }
             }else if (retsize == 0){
                 //发送缓冲区已满
-                TRACE_SYSTEM(BASE_TAG,"tcp send cache full,please try later,cliendid:%d",clientid);
+                TRACE_SYSTEM(BASE_TAG,"tcp send cache is full,will try later,cliendid:%d",clientid);
                 break;
             }else{
                 

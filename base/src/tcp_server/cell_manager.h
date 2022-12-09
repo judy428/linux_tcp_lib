@@ -74,17 +74,17 @@ private:
     //void doDel(int clientid);
     inline int directSend(int clientid,char* ptr,int size);
 private:
-    void handleRead();
+    // void handleRead();
 private:
     unordered_map<int,clientCell*> m_Cell;
     int m_ListenFd; //监听fd
     int m_BindCpu;
     //ringBuffer<cellTask*>* m_cellTask;
     srt_queue<cellTask*>* m_cellTask;
-    srt_queue<int>* m_handleRead;
+    // srt_queue<int>* m_handleRead;
     tNotify* m_TNotify;
 
-    shared_ptr<std::thread> m_th; //出来接受到客户端的数据
+    // shared_ptr<std::thread> m_th; //出来接受到客户端的数据
 };     //管理类
 
 }

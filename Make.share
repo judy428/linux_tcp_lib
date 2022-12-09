@@ -60,6 +60,7 @@ ifeq ($(TYPE), exe)
 TARGET:=$(TARGETNAME).exe
 TARGET:= $(TARGET_EXE_PATH)/$(TARGET)
 TARGET_PATH_R:=$(TARGET_EXE_PATH)
+OFLAGS_ALL += -Wl,-rpath=$(TARGET_LIB_PATH) -Wl,-rpath=./
 endif
  
 ifeq ($(TYPE), staticlib)

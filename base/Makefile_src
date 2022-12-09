@@ -23,7 +23,7 @@ SRCDIR:= ./src/
 #version file
 include $(SRCDIR)/version
  
-TOTALSRCDIR:= ./src/ ./src/lockfree_queue/ ./src/ring_buffer/ ./src/tcp_client/ ./src/tcp_server/
+TOTALSRCDIR:= ./src/ ./src/tcp_client/ ./src/tcp_server/
 
 #CCXXFLAGS= -DDEBUG -g
  
